@@ -47,3 +47,18 @@ export const FormateData = (data) => {
     throw new Error("Data Not found!");
   }
 };
+
+
+
+
+export const PublishCustomerEvent = async(payload)=>{
+
+
+  axios.post('/http://localhost:8000/customer/app-events',{
+    payload
+  })
+
+
+}
+
+
