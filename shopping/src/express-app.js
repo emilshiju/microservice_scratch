@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import route from './api/index.js';
-const { customer, products, shopping } =route
+const { appEvents, shopping } =route
 import HandleErrors from './utils/error-handler.js';
 
 export default async (app) => {
@@ -11,9 +11,8 @@ export default async (app) => {
   app.use(cors());
   app.use(express.static(new URL('./public', import.meta.url).pathname));
 
-  // API routes
-  customer(app);
-  products(app);
+  
+  appEvents(app)
   shopping(app);
 
   // Error handling
