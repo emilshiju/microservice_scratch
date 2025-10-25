@@ -4,7 +4,7 @@ import route from './api/index.js';
 const { appEvents, shopping } =route
 import HandleErrors from './utils/error-handler.js';
 
-export default async (app) => {
+export default async (app,channel) => {
 
   app.use(express.json({ limit: '1mb' }));
   app.use(express.urlencoded({ extended: true, limit: '1mb' }));
@@ -13,7 +13,7 @@ export default async (app) => {
 
   
   appEvents(app)
-  shopping(app);
+  shopping(app,channel);
 
   // Error handling
   app.use(HandleErrors);

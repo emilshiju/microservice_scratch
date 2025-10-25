@@ -1,10 +1,16 @@
 import ShoppingService from "../services/shopping-service.js";
 import { PublishCustomerEvent } from "../utils/index.js";
 import UserAuth from './middlewares/auth.js';
+import { SubscribeMessage ,PublishMessage} from "../utils/index.js";
+import  config  from "../config/index.js"
+const {SHOPPING_BINDING_KEY,CUSTOMER_BINDING_KEY,QUEUE_NAME}=config
 
-export default (app) => {
+
+
+export default (app,channel) => {
     
     const service = new ShoppingService();
+    SubscribeMessage(channel,service)
    
 
     app.post('/order', UserAuth, async (req, res, next) => {
@@ -16,7 +22,8 @@ export default (app) => {
 
             const payload=await service.GetOrderPayload(_id,data,'CREATE_ORDER')
 
-            PublishCustomerEvent(payload)
+            // PublishCustomerEvent(payload)
+            PublishMessage(channel,CUSTOMER_BINDING_KEY,JSON.stringify(payload))
 
 
             return res.status(200).json(data);

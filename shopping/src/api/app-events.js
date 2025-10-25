@@ -1,9 +1,9 @@
-import CustomerService from "../services/customer-service";
 
+import ShoppingService from "../services/shopping-service.js";
 
 const ShoppingAppEvents=(app)=>{
 
-    const service=new CustomerService()
+    const service=new ShoppingService()
 
     app.use('/app-events',async(req,res,next)=>{
 

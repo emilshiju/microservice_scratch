@@ -1,0 +1,5 @@
+{"level":"error","message":"Sat Oct 25 2025 15:59:52 GMT+0530 (India Standard Time) - {}","private":true}
+{"level":"error","message":"Sat Oct 25 2025 15:59:52 GMT+0530 (India Standard Time) - {\"code\":\"ERR_INVALID_URL\",\"input\":\"/http://localhost:8000/customer/app-events\"}","private":true}
+{"level":"error","message":"Sat Oct 25 2025 15:59:52 GMT+0530 (India Standard Time) - {\"code\":\"ERR_INVALID_URL\",\"input\":\"/http://localhost:8000/shopping/app-events\"}","private":true}
+{"level":"error","message":"Sat Oct 25 2025 16:00:36 GMT+0530 (India Standard Time) - {\"code\":\"ERR_INVALID_URL\",\"input\":\"/http://localhost:8000/customer/app-events\"}","private":true}
+{"level":"error","message":"Sat Oct 25 2025 16:00:36 GMT+0530 (India Standard Time) - {\"code\":\"ERR_INVALID_URL\",\"input\":\"/http://localhost:8000/shopping/app-events\"}","private":true}

@@ -1,10 +1,15 @@
 import ProductService from '../services/product-service.js';
 import { PublishCustomrEvent,PublishShoppingEvent } from '../utils/index.js';
 import UserAuth from './middlewares/auth.js';
+import { PublishMessage,SubscribeMessage } from '../utils/index.js';
+import  config  from "../config/index.js"
+const {SHOPPING_BINDING_KEY,CUSTOMER_BINDING_KEY}=config
 
-export default (app) => {
+export default (app,channel) => {
     
     const service = new ProductService();
+
+    
     
 
     app.post('/product/create', async (req, res, next) => {
@@ -52,7 +57,8 @@ export default (app) => {
 
         const {data}=await service.GetProductPayload(_id,{productId:req.body._id},'ADD_TO_WISHLIST')
         try {
-            PublishCustomrEvent(data)
+            // PublishCustomrEvent(data)
+            PublishMessage(channel,CUSTOMER_BINDING_KEY,JSON.stringify(data))
            
             return res.status(200).json(data.data.product);
         } catch (err) {
@@ -67,7 +73,9 @@ export default (app) => {
 
             const {data}=await service.GetProductPayload(_id,{productId},'REMOVE_FROM_WISHLIST')
 
-            PublishCustomrEvent(data)
+            // PublishCustomrEvent(data)
+
+            PublishMessage(channel,CUSTOMER_BINDING_KEY,JSON.stringify(data))
 
             return res.status(200).json(data.data.product);
         } catch (err) {
@@ -81,8 +89,11 @@ export default (app) => {
 
             const {data}=await service.GetProductPayload(_id,{productId:req.body._id,qty:req.body.qty},'ADD_TO_CART')
 
-            PublishCustomrEvent(data)
-            PublishShoppingEvent(data)
+            // PublishCustomrEvent(data)
+            PublishMessage(channel,CUSTOMER_BINDING_KEY,JSON.stringify(data))
+
+            // PublishShoppingEvent(data)
+            PublishMessage(channel,SHOPPING_BINDING_KEY,JSON.stringify(data))
 
             const response={
                 product:data.data.product,
@@ -104,8 +115,11 @@ export default (app) => {
             const {data}=await service.GetProductPayload(_id,{productId},'REMOVE_FROM_CART')
 
 
-            PublishCustomrEvent(data)
-            PublishShoppingEvent(data)
+            // PublishCustomrEvent(data)
+            // PublishShoppingEvent(data)
+
+            PublishMessage(channel,CUSTOMER_BINDING_KEY,JSON.stringify(data))
+            PublishMessage(channel,SHOPPING_BINDING_KEY,JSON.stringify(data))
 
              const response={
                 product:data.data.product,

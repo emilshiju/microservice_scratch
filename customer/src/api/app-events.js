@@ -1,4 +1,4 @@
-import CustomerService from "../services/customer-service";
+import CustomerService from "../services/customer-service.js";
 
 
 const CustomerAppEvents=(app)=>{
@@ -11,7 +11,7 @@ const CustomerAppEvents=(app)=>{
 
         service.SubscribeEvents(payload)
 
-        console.log("===================  Shopping Service recorded Event ============")
+        console.log("===================  Customer Service recorded Event ============")
         
         return res.status(200).json(payload)
 

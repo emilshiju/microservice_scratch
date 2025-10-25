@@ -1,8 +1,9 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import  config  from "../config/index.js"
+import amqplib from "amqplib"
 
-const { DB_URL, APP_SECRET } = config;
+const { DB_URL, APP_SECRET ,MESSAGE_BROKER_URL,EXCHANGE_NAME,SHOPPING_BINDING_KEY,QUEUE_NAME} = config;
 
 
 // Utility functions
@@ -60,5 +61,82 @@ export const PublishCustomerEvent = async(payload)=>{
 
 
 }
+
+
+
+
+
+
+
+
+
+//  Message Broker RabbitMQ
+
+
+
+export const CreateChannel=async()=>{
+
+
+  try{
+
+
+    const connection=await amqplib.connect(MESSAGE_BROKER_URL)
+    const channel=await connection.createChannel()
+
+    await channel.assertExchange(EXCHANGE_NAME,'direct',false)
+
+    return channel
+
+  }catch(err){
+    throw err
+  }
+
+
+
+}
+
+
+export const PublishMessage=async(channel,binding_key,message)=>{
+
+
+  try{
+
+    await channel.publish(EXCHANGE_NAME,binding_key,Buffer.from(message))
+
+
+  }catch(err){
+    throw err
+  }
+
+}
+
+
+export const SubscribeMessage=async(channel,service)=>{
+
+
+  try{
+
+
+
+    const appQueue=await channel.assertQueue(QUEUE_NAME)
+
+    channel.bindQueue(appQueue.queue,EXCHANGE_NAME,SHOPPING_BINDING_KEY)
+
+    channel.consume(appQueue.queue,data=>{
+      console.log('received data in shopping service')
+      console.log(data.connect.toString())
+      channel.ack(data)
+    })
+
+
+
+  }catch(err){
+
+  }
+
+}
+
+
+
 
 

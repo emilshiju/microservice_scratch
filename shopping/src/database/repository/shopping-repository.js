@@ -1,6 +1,5 @@
 import {
-  CustomerModel,
-  ProductModel,
+ 
   OrderModel,
   CartModel,
 } from "../models/index.js";
@@ -72,7 +71,7 @@ class ShoppingRepository {
         }
 
         cart.items = cartItems;
-        return await cart.save;
+        return await cart.save()
       } else {
         return await CartModel.create({
           customerId,

@@ -4,6 +4,7 @@ import  database from "./database/index.js"
 const {databaseConnection}=database
 import expressApp from "./express-app.js"
 import  config  from "./config/index.js"
+import { CreateChannel } from "./utils/index.js"
 
 const { DB_URL, APP_SECRET,PORT } = config;
 
@@ -20,7 +21,9 @@ const StartServer=async()=>{
 
     console.log("second")
 
-    await expressApp(app)
+    const channel =await  CreateChannel()
+
+    await expressApp(app,channel)
 
     console.log("third")
 
