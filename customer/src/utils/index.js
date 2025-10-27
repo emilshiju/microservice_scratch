@@ -102,6 +102,7 @@ export const SubscribeMessage=async(channel,service)=>{
     channel.consume(appQueue.queue,data=>{
       console.log('received data')
       console.log(data.connect.toString())
+      service.SubscribeEvents(data.content.toString())
       channel.ack(data)
     })
 
